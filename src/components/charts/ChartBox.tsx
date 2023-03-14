@@ -1,7 +1,31 @@
 import ReactEcharts from 'echarts-for-react';
+import { useEffect, useState } from 'react';
 
 const ChartBox = ({ data }: any) => {
-  console.log(data);
+  const [xarray, setXarray] = useState();
+  const [areaArray, setAreaArray] = useState();
+  const [barArray, setBarArray] = useState();
+
+  useEffect(() => {
+    if (data) {
+      const dataArray = Object.entries(data);
+      const xarrayThumb = [];
+      const areaArrayThumb = [];
+      const barArrayThumb = [];
+      for (let i = 0; i < dataArray.length; i++) {
+        console.log(dataArray[i][1]);
+        xarrayThumb.push(dataArray[i][0]);
+        areaArrayThumb.push(dataArray[i][1].value_area);
+        barArrayThumb.push(dataArray[i][1].value_bar);
+      }
+      setXarray(xarrayThumb);
+      setAreaArray(areaArrayThumb);
+      setBarArray(barArrayThumb);
+    }
+  }, [data]);
+
+  console.log(barArray);
+
   const options = {
     tooltip: {
       trigger: 'axis',
@@ -21,12 +45,12 @@ const ChartBox = ({ data }: any) => {
       },
     },
     legend: {
-      data: ['지역', 'bar'],
+      data: ['Area', 'bar'],
     },
     xAxis: [
       {
         type: 'category',
-        data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+        data: xarray,
         axisPointer: {
           type: 'shadow',
         },
@@ -35,58 +59,51 @@ const ChartBox = ({ data }: any) => {
     yAxis: [
       {
         type: 'value',
-        name: '지역',
+        name: 'Area',
         min: 0,
         max: 250,
         interval: 50,
         axisLabel: {
-          formatter: '{value} ml',
+          formatter: '{value}',
         },
       },
       {
         type: 'value',
-        name: 'bar',
-        min: 0,
-        max: 25,
-        interval: 5,
+        name: 'Bar',
+        min: 10000,
+        max: 20000,
+        interval: 5000,
         axisLabel: {
-          formatter: '{value} °C',
+          formatter: '{value}',
         },
       },
     ],
     series: [
       {
-        name: '지역',
+        name: 'Area',
         type: 'bar',
         tooltip: {
-          valueFormatter: function (value) {
-            return (value as number) + ' ml';
+          valueFormatter: function (value: number) {
+            return value;
           },
         },
-        data: [
-          2.6, 5.9, 9.0, 26.4, 28.7, 70.7, 175.6, 182.2, 48.7, 18.8, 6.0, 2.3,
-        ],
+        data: areaArray,
       },
       {
-        name: 'bar',
+        name: 'Bar',
         type: 'line',
         yAxisIndex: 1,
         tooltip: {
-          valueFormatter: function (value) {
-            return (value as number) + ' °C';
+          valueFormatter: function (value: number) {
+            return value;
           },
         },
-        data: [
-          2.0, 2.2, 3.3, 4.5, 6.3, 10.2, 20.3, 23.4, 23.0, 16.5, 12.0, 6.2,
-        ],
+        data: barArray,
       },
     ],
   };
   return (
-    <ReactEcharts
-      option={options}
-      style={{ width: '100%', height: '100%' }}
-    ></ReactEcharts>
+    <ReactEcharts option={options} style={{ width: '100%', height: '100%' }} />
   );
 };
 
