@@ -5,6 +5,7 @@ import { api } from './apis/api';
 const { Header, Content } = Layout;
 
 import ChartBox from './components/charts/ChartBox';
+import FilterBox from './components/FilterBox';
 
 function App() {
   const [data, setData] = useState([]);
@@ -28,6 +29,7 @@ function App() {
     <Layout style={{ height: '100vh' }}>
       <Header style={headerStyle}>시계열 차트 만들기</Header>
       <Content style={contentStyle}>
+        <FilterBox />
         <ChartBox data={data} />
       </Content>
     </Layout>
