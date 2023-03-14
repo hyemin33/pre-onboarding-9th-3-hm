@@ -1,5 +1,9 @@
 import { useState, useEffect } from 'react';
+
+import { Layout } from 'antd';
 import { api } from './apis/api';
+const { Header, Content } = Layout;
+
 import ChartBox from './components/charts/ChartBox';
 
 function App() {
@@ -21,11 +25,27 @@ function App() {
   }, []);
 
   return (
-    <div className='App' style={{ height: 'calc(100vh - 100px)' }}>
-      <h1>시계열 차트 만들기</h1>
-      <ChartBox data={data} />
-    </div>
+    <Layout style={{ height: '100vh' }}>
+      <Header style={headerStyle}>시계열 차트 만들기</Header>
+      <Content style={contentStyle}>
+        <ChartBox data={data} />
+      </Content>
+    </Layout>
   );
 }
+
+const headerStyle: React.CSSProperties = {
+  textAlign: 'center',
+  color: '#fff',
+  height: 64,
+  paddingInline: 50,
+  lineHeight: '64px',
+  backgroundColor: '#7dbcea',
+};
+
+const contentStyle: React.CSSProperties = {
+  minHeight: 'calc(100% - 64px)',
+  padding: '20px',
+};
 
 export default App;
