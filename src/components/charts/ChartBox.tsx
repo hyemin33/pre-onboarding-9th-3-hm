@@ -2,29 +2,31 @@ import ReactEcharts from 'echarts-for-react';
 import { useEffect, useState } from 'react';
 
 const ChartBox = ({ data }: any) => {
-  const [xarray, setXarray] = useState();
-  const [areaArray, setAreaArray] = useState();
-  const [barArray, setBarArray] = useState();
+  const [xarray, setXarray] = useState<string[]>([]);
+  const [areaArray, setAreaArray] = useState<number[]>([]);
+  const [barArray, setBarArray] = useState<number[]>([]);
+  const [idArray, setIdArray] = useState<string[]>([]);
 
   useEffect(() => {
     if (data) {
-      const dataArray = Object.entries(data);
-      const xarrayThumb = [];
-      const areaArrayThumb = [];
-      const barArrayThumb = [];
-      for (let i = 0; i < dataArray.length; i++) {
-        console.log(dataArray[i][1]);
-        xarrayThumb.push(dataArray[i][0]);
-        areaArrayThumb.push(dataArray[i][1].value_area);
-        barArrayThumb.push(dataArray[i][1].value_bar);
-      }
+      let xarrayThumb: string[] = [];
+      let areaArrayThumb: number[] = [];
+      let barArrayThumb: number[] = [];
+      let idArrayThumb: string[] = [];
+
+      // entry 타입은 무엇일까요.
+      Object.entries(data).forEach((entry: any) => {
+        xarrayThumb = [...xarrayThumb, entry[0]];
+        areaArrayThumb = [...areaArrayThumb, entry[1].value_area];
+        barArrayThumb = [...barArrayThumb, entry[1].value_bar];
+        idArrayThumb = [...idArrayThumb, entry[1].id];
+      });
       setXarray(xarrayThumb);
       setAreaArray(areaArrayThumb);
       setBarArray(barArrayThumb);
+      setIdArray(idArrayThumb);
     }
   }, [data]);
-
-  console.log(barArray);
 
   const options = {
     tooltip: {
@@ -32,7 +34,7 @@ const ChartBox = ({ data }: any) => {
       axisPointer: {
         type: 'cross',
         crossStyle: {
-          color: '#999',
+          color: 'red',
         },
       },
     },
@@ -45,10 +47,24 @@ const ChartBox = ({ data }: any) => {
       },
     },
     legend: {
-      data: ['Area', 'bar'],
+      data: ['Area', 'Bar'],
     },
     xAxis: [
       {
+        axisLabel: {
+          interval: 8,
+          rotate: 55,
+          formatter: function (value: string) {
+            const label = value.split(' ');
+            return label[0] + '\n' + label[1];
+          },
+          textStyle: {
+            baseline: 'top',
+            color: '#333',
+            fontSize: 10,
+            fontWeight: 'bold',
+          },
+        },
         type: 'category',
         data: xarray,
         axisPointer: {
@@ -88,6 +104,27 @@ const ChartBox = ({ data }: any) => {
           },
         },
         data: areaArray,
+        itemStyle: {
+          color: '#9ea1ff',
+        },
+        emphasis: {
+          itemStyle: {
+            color: '#6e1ef4',
+          },
+          label: {
+            show: true,
+            position: 'top',
+            color: '#fff',
+            backgroundColor: '#6e1ef4',
+            fontWeight: 'bold',
+            padding: 3,
+            fontSize: 14,
+
+            formatter: function (params: any) {
+              return idArray[params.dataIndex];
+            },
+          },
+        },
       },
       {
         name: 'Bar',
@@ -99,11 +136,21 @@ const ChartBox = ({ data }: any) => {
           },
         },
         data: barArray,
+        itemStyle: {
+          color: '#ff7875',
+        },
+        emphasis: {
+          itemStyle: {
+            color: '#a31515',
+            borderColor: '#a31515',
+            borderWidth: 5,
+          },
+        },
       },
     ],
   };
   return (
-    <ReactEcharts option={options} style={{ width: '100%', height: '100%' }} />
+    <ReactEcharts option={options} style={{ width: '100%', height: '90%' }} />
   );
 };
 

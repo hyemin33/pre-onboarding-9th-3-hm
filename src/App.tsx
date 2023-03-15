@@ -42,7 +42,7 @@ const headerStyle: React.CSSProperties = {
   height: 64,
   paddingInline: 50,
   lineHeight: '64px',
-  backgroundColor: '#7dbcea',
+  backgroundColor: '#9ea1ff',
 };
 
 const contentStyle: React.CSSProperties = {

@@ -1,12 +1,13 @@
 import { Button, Space } from 'antd';
 
+const idArray = ['강남구', '노원구', '성북구', '중원구'];
+
 const FilterBox = () => {
   return (
-    <Space wrap style={{ padding: '20px' }}>
-      <Button>중원구</Button>
-      <Button>성북구</Button>
-      <Button>강남구</Button>
-      <Button>노원구</Button>
+    <Space align='center'>
+      {idArray.map((id: string, i: number) => (
+        <Button key={`filter-id` + i}>{id}</Button>
+      ))}
     </Space>
   );
 };
