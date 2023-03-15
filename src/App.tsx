@@ -1,11 +1,9 @@
 import { useState, useEffect } from 'react';
-
-import { Layout } from 'antd';
 import { api } from './apis/api';
-const { Header, Content } = Layout;
+import { Contents, Header, Layout } from './apis/commons/commonStyles';
 
-import ChartBox from './components/charts/ChartBox';
-import FilterBox from './components/FilterBox';
+import Chart from './components/charts/Chart';
+import Filter from './components/Filter';
 
 function App() {
   const [data, setData] = useState([]);
@@ -27,27 +25,15 @@ function App() {
 
   return (
     <Layout style={{ height: '100vh' }}>
-      <Header style={headerStyle}>시계열 차트 만들기</Header>
-      <Content style={contentStyle}>
-        <FilterBox />
-        <ChartBox data={data} />
-      </Content>
+      <Header>
+        <h1>시계열 차트 만들기</h1>
+      </Header>
+      <Contents>
+        <Filter />
+        <Chart data={data} />
+      </Contents>
     </Layout>
   );
 }
-
-const headerStyle: React.CSSProperties = {
-  textAlign: 'center',
-  color: '#fff',
-  height: 64,
-  paddingInline: 50,
-  lineHeight: '64px',
-  backgroundColor: '#9ea1ff',
-};
-
-const contentStyle: React.CSSProperties = {
-  minHeight: 'calc(100% - 64px)',
-  padding: '20px',
-};
 
 export default App;

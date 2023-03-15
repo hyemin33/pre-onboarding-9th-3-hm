@@ -1,15 +1,15 @@
-import { Button, Space } from 'antd';
+import { Button, FilterArea } from '../apis/commons/commonStyles';
 
 const idArray = ['강남구', '노원구', '성북구', '중원구'];
 
-const FilterBox = () => {
+const Filter = () => {
   return (
-    <Space align='center'>
+    <FilterArea>
       {idArray.map((id: string, i: number) => (
         <Button key={`filter-id` + i}>{id}</Button>
       ))}
-    </Space>
+    </FilterArea>
   );
 };
 
-export default FilterBox;
+export default Filter;

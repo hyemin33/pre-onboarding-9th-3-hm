@@ -1,7 +1,7 @@
 import ReactEcharts from 'echarts-for-react';
 import { useEffect, useState } from 'react';
 
-const ChartBox = ({ data }: any) => {
+const Chart = ({ data }: any) => {
   const [xarray, setXarray] = useState<string[]>([]);
   const [areaArray, setAreaArray] = useState<number[]>([]);
   const [barArray, setBarArray] = useState<number[]>([]);
@@ -150,8 +150,8 @@ const ChartBox = ({ data }: any) => {
     ],
   };
   return (
-    <ReactEcharts option={options} style={{ width: '100%', height: '90%' }} />
+    <ReactEcharts option={options} style={{ width: '100%', height: '80%' }} />
   );
 };
 
-export default ChartBox;
+export default Chart;
