@@ -9,7 +9,7 @@
  
  
 ## 🔗 배포링크
-<a href="https://pre-onboarding-9th-3-hm-oode.vercel.app/">배포링크</a>
+<a href="https://pre-onboarding-9th-3-hm-oode.vercel.app/">배포 링크</a>
 
 
 ## 🛠️ 사용 기술 
